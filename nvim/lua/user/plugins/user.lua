@@ -10,7 +10,18 @@ return {
   --   end,
   -- },
   {
-    "github/copilot.vim",
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
     lazy = false,
+    config = function()
+      require("copilot").setup {
+        copilot_proxy_strict_ssl = false,
+      }
+    end,
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    lazy = false,
+    run = "cd app && yarn install",
   },
 }
