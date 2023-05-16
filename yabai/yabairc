@@ -1,6 +1,5 @@
 # bsp, stack or float
 yabai -m config layout bsp
-yabai -m config window_placement second_child
 yabai -m config --space 1 layout float
 
 # padding
@@ -10,17 +9,55 @@ yabai -m config left_padding 12
 yabai -m config right_padding 12
 yabai -m config window_gap 12
 
-# mouse settings
-yabai -m config mouse_follows_focus on
-yabai -m rule --add app="^Arc$" title="^$" mouse_follows_focus=off
+# windows
+yabai -m config window_placement second_child
+yabai -m config window_topmost on
+yabai -m config window_shadow float
+yabai -m config window_opacity on 
+yabai -m config active_window opacity 1.0
+yabai -m config normal_window_opacity 0.6
+yabai -m config window_origin_display focused
+yabai -m config window_opacity_duration 1
 
+# borders
+yabai -m config window_border on
+yabai -m config window_border_blur on
+yabai -m config window_border_hidpi on
+yabai -m config window_border_width 2
+yabai -m config window_border_radius 12
+yabai -m config active_window_border_color 0xff7793d1
+yabai -m config normal_window_border_color 0xff5e6798
+
+# mouse settings
+yabai -m config mouse_follows_focus off
 yabai -m config mouse_modifier alt
 yabai -m config mouse_action1 move
 yabai -m config mouse_action2 resize
-
 yabai -m mouse_drop_action swap
 
 # don't manage the following
 yabai -m rule --add app="1Password" manage=off
 yabai -m rule --add app="IINA" manage=off
+yabai -m rule --add app="Activity Monitor" manage=off
+yabai -m rule --add app="App Store" manage=off
+yabai -m rule --add app="Calculator" manage=off
+yabai -m rule --add app="Finder" manage=off
+yabai -m rule --add app="System Information" manage=off
+yabai -m rule --add app="Software Update" manage=off
+yabai -m rule --add app="System Preferences" manage=off
+yabai -m rule --add app="System Settings" manage=off
+yabai -m rule --add app="zoom.us" manage=off
+yabai -m rule --add app="System Settings" manage=off
+yabai -m rule --add app="Firefox" title="Library" manage=off
 
+# Signal hooks
+#yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+#yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+#yabai -m signal --add event=display_added action="sleep 1 && source $HOME/.local/bin/helper && create_spaces 7"
+#yabai -m signal --add event=display_removed action="sleep 1 && source $HOME/.local/bin/helper && create_spaces 7"
+#yabai -m signal --add event=window_created action="sketchybar --trigger windows_on_spaces"
+#yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
+#:yabai -m signal --add event=window_created app="Code" action="source ${HOME}/.config/bin/helper && auto_stack Code"
+
+yabai -m signal --add event=window_created app="Firefox" title!="(— Private Browsing$|^Picture-in-Picture$)" action="source ${HOME}/.local/bin/helper && auto_stack Firefox"
+yabai -m signal --add event=window_title_changed app="Firefox" title="- noVNC$" action="yabai -m window ${WINDOW_ID} --toggle native-fullscreen"
