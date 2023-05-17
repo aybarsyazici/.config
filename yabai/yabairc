@@ -72,8 +72,8 @@ yabai -m config "${MOUSE[@]}"
 for app in "${UNMANAGED[@]}"; do
     # if the app name has ~ in it, use the second part as the title
     if [[ $app == *"~"* ]]; then
-        app_name=$(echo "$app" | cut -d'|' -f1)
-        app_title=$(echo "$app" | cut -d'|' -f2)
+        app_name=$(echo "$app" | cut -d'~' -f1)
+        app_title=$(echo "$app" | cut -d'~' -f2)
         yabai -m rule --add app="$app_name" title="$app_title" manage=off
     else
         yabai -m rule --add app="$app" manage=off
